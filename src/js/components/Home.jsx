@@ -1,53 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 
-const Home = () => {
-    const [seconds, setSeconds] = useState(0);
-    const [active, setActive] = useState(true);
-
-    useEffect(() => {
-        let interval = null;
-
-        if (active) {
-            interval = setInterval(() => {
-                setSeconds(prevSeconds => prevSeconds + 1);
-            }, 1000);
-        } else {
-            clearInterval(interval);
-        }
-
-        return () => clearInterval(interval);
-    }, [active]);
-
-    const handleAlert = () => {
-        let userTime = prompt("¿En qué segundo quieres la alerta?");
-    };
-
-    let unit = seconds % 10;
-    let tens = Math.floor(seconds / 10) % 10;
-    let hundreds = Math.floor(seconds / 100) % 10;
-    let thousands = Math.floor(seconds / 1000) % 10;
-    let tenThousands = Math.floor(seconds / 10000) % 10;
-    let hundredThousands = Math.floor(seconds / 100000) % 10;
+const Home = (props) => {
+    const unit = props.seconds % 10;
+    const tens = Math.floor(props.seconds / 10) % 10;
+    const hundreds = Math.floor(props.seconds / 100) % 10;
+    const thousands = Math.floor(props.seconds / 1000) % 10;
+    const tenThousands = Math.floor(props.seconds / 10000) % 10;
+    const hundredThousands = Math.floor(props.seconds / 100000) % 10;
 
     return (
-        <div className="text-center mt-5">
-            <div className="d-flex justify-content-center bg-black text-white p-3 rounded mx-auto" style={{width: "fit-content"}}>
-                <div className="bg-dark m-1 p-3 rounded display-3"><i className="far fa-clock"></i></div>
-                <div className="bg-dark m-1 p-3 rounded display-3">{hundredThousands}</div>
-                <div className="bg-dark m-1 p-3 rounded display-3">{tenThousands}</div>
-                <div className="bg-dark m-1 p-3 rounded display-3">{thousands}</div>
-                <div className="bg-dark m-1 p-3 rounded display-3">{hundreds}</div>
-                <div className="bg-dark m-1 p-3 rounded display-3">{tens}</div>
-                <div className="bg-dark m-1 p-3 rounded display-3">{unit}</div>
-            </div>
-
-            <div className="mt-4">
-                <button className="btn btn-danger mx-1" onClick={() => setActive(false)}>Parar</button>
-                <button className="btn btn-success mx-1" onClick={() => setActive(true)}>Resumir</button>
-                <button className="btn btn-warning mx-1" onClick={() => setSeconds(0)}>Reiniciar</button>
-            </div>
+        <div className="d-flex justify-content-center align-items-center bg-black p-4 rounded-4 shadow-lg mb-4 main-counter-container">
+            <div className="digit-box"><i className="far fa-clock"></i></div>
+            <div className="digit-box">{hundredThousands}</div>
+            <div className="digit-box">{tenThousands}</div>
+            <div className="digit-box">{thousands}</div>
+            <div className="digit-box">{hundreds}</div>
+            <div className="digit-box">{tens}</div>
+            <div className="digit-box">{unit}</div>
         </div>
     );
+};
+
+Home.propTypes = {
+    seconds: PropTypes.number.isRequired
 };
 
 export default Home;
